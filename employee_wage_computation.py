@@ -13,7 +13,8 @@ import random
 
 WAGE_PER_HOUR = 20  
 FULL_DAY_WORKING_HOURS = 8
-
+PART_TIME_WAGE = 15
+PART_TIME_WORKING_HOURS = 8
 
 def check_attendance():
 
@@ -57,6 +58,27 @@ def DailyEmployeeWage(attendance):
     return emp_wage_per_day
 
 
+def employee_part_time_wage(attendance):
+    
+    """
+    description:
+        This function is used to calculate part time employee wage per day.
+    parameters:
+        attendance - to check attendance and calculate wage
+    return:
+        employee_wage_per_day
+    """ 
+
+
+    if attendance == 'present':
+        employee_wage_per_day = PART_TIME_WORKING_HOURS*PART_TIME_WAGE
+
+    else:
+        employee_wage_per_day = 0
+
+    return employee_wage_per_day
+
+
 def main():
 
     attendance = check_attendance()
@@ -64,6 +86,10 @@ def main():
 
     emp_day_wage = DailyEmployeeWage(attendance)
     print(f'Employee daily wage is {emp_day_wage}')
+
+    part_time_wage = employee_part_time_wage(attendance)
+    print(f'Employee daily part time wage is {part_time_wage}')
+
 
 
 if __name__ == '__main__':
