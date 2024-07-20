@@ -15,6 +15,7 @@ WAGE_PER_HOUR = 20
 FULL_DAY_WORKING_HOURS = 8
 PART_TIME_WAGE = 15
 PART_TIME_WORKING_HOURS = 8
+WORKING_DAYS_PER_MONTH = 20
 
 def check_attendance():
 
@@ -39,58 +40,44 @@ def check_attendance():
     return employee_attendance
 
 
-def DailyEmployeeWage(attendance):
-    """
-    description:
-        This function is used to calculate employee wage for full time employees.
-    parameters:
-        attendance - to calculate the wage based on the employee presence
-    return:
-        employee_wage_per_day
-    """
-
-
-    if attendance == 'present':
-        emp_wage_per_day = WAGE_PER_HOUR * FULL_DAY_WORKING_HOURS
-    else:
-        emp_wage_per_day = 0
-    
-    return emp_wage_per_day
-
-
-def employee_part_time_wage(attendance):
+def employee_type_wage_per_day(type_of_employment):
     
     """
+
     description:
-        This function is used to calculate part time employee wage per day.
+        This function is used to calculate the employee wage based on the type of employment.
     parameters:
-        attendance - to check attendance and calculate wage
+        type_of_employment - employee wages will calculating depending upon type of employment
     return:
-        employee_wage_per_day
-    """ 
+        employee_wage_per_day, else : enter correct employee_type
 
+    """    
 
-    if attendance == 'present':
-        employee_wage_per_day = PART_TIME_WORKING_HOURS*PART_TIME_WAGE
-
+    if type_of_employment == 'FULL-TIME':
+        employee_wage_per_day = WAGE_PER_HOUR * FULL_DAY_WORKING_HOURS
+        return employee_wage_per_day
+    
+    elif type_of_employment == 'PART-TIME':
+        employee_wage_per_day = PART_TIME_WAGE * PART_TIME_WORKING_HOURS
+        return employee_wage_per_day
+    
     else:
-        employee_wage_per_day = 0
-
-    return employee_wage_per_day
-
+        return "enter valid employee_type(FULL-TIME/PART-TIME)"
+    
 
 def main():
 
     attendance = check_attendance()
     print("Employee is ",attendance)
+    wage_per_day = 0
 
-    emp_day_wage = DailyEmployeeWage(attendance)
-    print(f'Employee daily wage is {emp_day_wage}')
+    if attendance == 'present':
+        type_of_employment = input("enter FULL-TIME/PART-TIME: ").upper()
+        wage_per_day = employee_type_wage_per_day(type_of_employment)
+        print(f"employee wage  = {wage_per_day}")
+    else:
+        print(f"employee wage  = {wage_per_day}")
 
-    part_time_wage = employee_part_time_wage(attendance)
-    print(f'Employee daily part time wage is {part_time_wage}')
-
-
-
+        
 if __name__ == '__main__':
     main()
