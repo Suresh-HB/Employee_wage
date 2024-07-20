@@ -74,22 +74,29 @@ def calculate_employee_monthly_wage():
     employee_daily_wage =[]
     working_days = 1
     total_wage = 0
+    total_hours=0
 
-    while working_days<=20:
+    while working_days<=20 and total_hours<=100:
 
         attendance = check_attendance()
         employee_atd_lst.append(attendance)
-
         if attendance == 'present':
 
             emp_type = random.randint(0,1)
             one_day_wage = employee_type_wage_per_day(emp_type)
             employee_daily_wage.append(one_day_wage)
             total_wage+=one_day_wage
+            total_hours+=8
+            
+            if total_hours>100:
+                one_day_wage = employee_daily_wage[-1] / 2
+                employee_daily_wage[-1] = one_day_wage
+                total_wage = total_wage - one_day_wage
         else:
             employee_daily_wage.append(0)
             total_wage+=0
         working_days+=1
+    print("worked days=",working_days-1, " worked hours=",total_hours)
     return total_wage, employee_atd_lst, employee_daily_wage
 
 
