@@ -99,21 +99,57 @@ class Company:
         self.employee_list = [] 
 
     def get_employee(self, emp_name):
+ 
+        """
+        Description: Function to gives the employee name from employee_list = [].
+        Parameters:
+            emp_name: Function taking employee name and return name if it is present.
+        Returns:
+            return: returns employee name.
+        """
+
         for emp in self.employee_list:
             if emp.emp_name == emp_name:
                 return emp
         return None
 
     def add_employee(self, emp_obj):
+        
+        """
+        Description: Function to adding employees into company after creating company object.
+        Parameters:
+            emp_obj: Function taking employee object for adding it in to company.
+        Returns:
+            None: 
+        """
+
         self.employee_list.append(emp_obj)
 
     def delete_employee(self, emp_name):
+        
+        """
+        Description: Function to delete employee from company.
+        Parameters:
+            emp_name: Function taking employee name and delete employee based on name.
+        Returns:
+            None: 
+        """
+
         for emp in self.employee_list:
             if emp.emp_name == emp_name:
                 self.employee_list.remove(emp)
                 break
     
     def display_emp_details(self):
+        
+        """
+        Description: Function for prints the employee details.
+        Parameters:
+            None:
+        Returns:
+            None:  
+        """
+
         for emp in self.employee_list:
             emp.get_emp_details()
             print()      
@@ -150,26 +186,68 @@ class EmployeeWageBuilder(ABC):
 
 
 class MultipleCompanies(EmployeeWageBuilder):
-    
+     
+    """
+    Concrete implementation of EmployeeWageBuilder interface for managing multiple companies wage information.
+    """
+
     def __init__(self) -> None:
-        self.company_list = []  # Using list to store companies
+        
+        """ Initialize MultipleCompanies with an empty dictionary to store company objects."""
+        self.company_list = [] 
 
     def get_company(self, comp_name):
+        
+        """
+        Description: Retrieve details of a company based on its name.
+        Parameters:
+            comp_name: Function taking company name as a parameter and retrieve Name of the company.
+        Returns:
+            Company object or None: the company object if found in company_list = [], else returns None.
+        """
+
         for company in self.company_list:
             if company.company_name == comp_name:
                 return company
         return None
 
     def add_company(self, com_obj):
+        
+        """
+        Description: Add a new company object .
+        Parameters:
+            com_obj: Company An instance of the Company class representing the company to add.
+        Returns:
+            None:
+        """
+
         self.company_list.append(com_obj)
 
     def delete_company(self, company_name):
+
+        """
+        Description: Delete a company and its associated wage information from the company.
+        Parameters:
+            company_name: Name of the company to delete from company_dict.
+        Returns:
+            None:
+        """
+
         for company in self.company_list:
             if company.company_name == company_name:
                 self.company_list.remove(company)
                 break
 
     def display_company(self):
+        
+        """
+        Description: Display all companies currently managed in the company.
+        Parameters:
+            None:
+        Returns:
+            None:
+        """
+        
         for com in self.company_list:
             print("-" * 40)
             print(f"Company: {com.company_name}")
