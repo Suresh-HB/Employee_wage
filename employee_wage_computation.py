@@ -55,7 +55,7 @@ class Employee:
 
 
 def main():
-    random.seed()
+    # random.seed()
     
     emp1 = Employee("suresh", 20)
     emp1.monthly_wage()
