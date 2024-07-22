@@ -8,6 +8,7 @@
 
 """
 import random
+from abc import ABC, abstractmethod
 
 class Employee:
 
@@ -74,7 +75,26 @@ class Company:
             emp.get_emp_details()
     
 
-class MultipleCompanies:
+class EmployeeWageBuilder(ABC):
+
+    @abstractmethod
+    def get_company(self, comp_name):
+        pass
+
+    @abstractmethod
+    def add_company(self, com_obj):
+        pass
+
+    @abstractmethod
+    def delete_company(self, company_name):
+        pass
+    
+    @abstractmethod
+    def display_company(self):
+        pass
+
+
+class MultipleCompanies(EmployeeWageBuilder):
 
     def __init__(self) -> None:
         self.company_dict = {}
@@ -114,7 +134,6 @@ def main():
 
     company1.add_employee(employee1)
     company2.add_employee(employee2)
-    company1.get_employee("suresh")
     
     company1.display_emp_details()
     company2.display_emp_details()
