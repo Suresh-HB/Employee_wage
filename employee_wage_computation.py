@@ -27,26 +27,27 @@ class Employee:
     def get_attendance():
         return random.randint(0, 2)
     
-    
     def daily_wage(self):
+
         emp_status = self.get_attendance()
-        # print(f"{self.emp_name} attendance status: {emp_status}")  
-        
+
         if emp_status == 0:
             return 0, 0
         elif emp_status == 1: 
             return self.wage_per_hr * self.FULL_DAY_HOURS, self.FULL_DAY_HOURS
         elif emp_status == 2:
-            return self.wage_per_hr * self.PART_TIME_HOURS, self.PART_TIME_HOURS
-           
+            return self.wage_per_hr * self.PART_TIME_HOURS, self.PART_TIME_HOURS 
+        
     def monthly_wage(self):
+
         while self.total_days_worked < self.WORKING_DAYS_PER_MONTH and self.total_hrs_worked < self.MAX_WORKING_HOURS:
             wage, hours = self.daily_wage()
             self.total_wage += wage
             self.total_hrs_worked += hours
             self.total_days_worked += 1
-
+   
     def get_emp_details(self):
+
         print(f"Name: {self.emp_name}")
         print(f"Total Wage: {self.total_wage}") 
         print(f"Total Hours Worked: {self.total_hrs_worked}")
@@ -54,6 +55,7 @@ class Employee:
 
 
 class Company:
+    
     def __init__(self, name) -> None:
         self.company_name = name
         self.employee_dict = {}
@@ -82,6 +84,14 @@ def main():
 
     employee1.get_emp_details()
     employee2.get_emp_details()
+
+    company1= Company("Apexon")
+    company2= Company("Teksystem")
+   
+
+    company1.add_employee(employee1)
+    company2.add_employee(employee2)
+    
 
 
 if __name__ == '__main__':
