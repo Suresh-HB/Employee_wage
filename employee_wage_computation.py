@@ -53,18 +53,35 @@ class Employee:
         print(f"Total Days Worked: {self.total_days_worked}")
 
 
+class Company:
+    def __init__(self, name) -> None:
+        self.company_name = name
+        self.employee_dict = {}
+
+    def get_employee(self, emp_name):
+        return self.employee_dict.get(emp_name)
+
+    def add_employee(self, emp_obj):
+        self.employee_dict.update({emp_obj.emp_name: emp_obj})
+
+    def delete_employee(self, emp_name):
+        self.employee_dict.pop(emp_name)
+    
+    def display_emp_details(self):
+        for emp in self.employee_dict.values():
+            emp.get_emp_details()
+    
 
 def main():
-    random.seed()
     
-    emp1 = Employee("suresh", 20)
-    emp1.monthly_wage()
+    employee1 = Employee("suresh", 20)
+    employee1.monthly_wage()
 
-    emp2 = Employee("ramesh", 30)
-    emp2.monthly_wage()
+    employee2 = Employee("ramesh", 30)
+    employee2.monthly_wage()
 
-    emp1.get_emp_details()
-    emp2.get_emp_details()
+    employee1.get_emp_details()
+    employee2.get_emp_details()
 
 
 if __name__ == '__main__':
