@@ -96,7 +96,7 @@ class Company:
     
     def __init__(self, name) -> None:
         self.company_name = name
-        self.employee_list = [] 
+        self.employee_dict = {}
 
     def get_employee(self, emp_name):
  
@@ -108,10 +108,7 @@ class Company:
             return: returns employee name.
         """
 
-        for emp in self.employee_list:
-            if emp.emp_name == emp_name:
-                return emp
-        return None
+        return self.employee_dict.get(emp_name)
 
     def add_employee(self, emp_obj):
         
@@ -123,7 +120,7 @@ class Company:
             None: 
         """
 
-        self.employee_list.append(emp_obj)
+        self.employee_dict.update({emp_obj.emp_name: emp_obj})
 
     def delete_employee(self, emp_name):
         
@@ -135,10 +132,7 @@ class Company:
             None: 
         """
 
-        for emp in self.employee_list:
-            if emp.emp_name == emp_name:
-                self.employee_list.remove(emp)
-                break
+        self.employee_dict.pop(emp_name)
     
     def display_emp_details(self):
         
@@ -150,9 +144,9 @@ class Company:
             None:  
         """
 
-        for emp in self.employee_list:
+        for emp in self.employee_dict.values():
             emp.get_emp_details()
-            print()      
+            print("="*50)      
 
 from abc import ABC, abstractmethod
 
@@ -194,7 +188,7 @@ class MultipleCompanies(EmployeeWageBuilder):
     def __init__(self) -> None:
         
         """ Initialize MultipleCompanies with an empty dictionary to store company objects."""
-        self.company_list = [] 
+        self.company_dict = {} 
 
     def get_company(self, comp_name):
         
@@ -205,11 +199,10 @@ class MultipleCompanies(EmployeeWageBuilder):
         Returns:
             Company object or None: the company object if found in company_list = [], else returns None.
         """
-
-        for company in self.company_list:
-            if company.company_name == comp_name:
-                return company
-        return None
+        if comp_name not in self.company_dict:
+            return None
+        return self.company_dict[comp_name]
+        
 
     def add_company(self, com_obj):
         
@@ -221,7 +214,7 @@ class MultipleCompanies(EmployeeWageBuilder):
             None:
         """
 
-        self.company_list.append(com_obj)
+        self.company_dict.update({com_obj.company_name: com_obj})
 
     def delete_company(self, company_name):
 
@@ -233,10 +226,7 @@ class MultipleCompanies(EmployeeWageBuilder):
             None:
         """
 
-        for company in self.company_list:
-            if company.company_name == company_name:
-                self.company_list.remove(company)
-                break
+        self.company_dict.pop(company_name)
 
     def display_company(self):
         
@@ -248,36 +238,63 @@ class MultipleCompanies(EmployeeWageBuilder):
             None:
         """
         
-        for com in self.company_list:
-            print("-" * 40)
+        for com in self.company_dict.values():
+            # print("-" * 40)
             print(f"Company: {com.company_name}")
             com.display_emp_details()
     
 def main():
     
-    employee1 = Employee("suresh", 20)
-    employee1.monthly_wage()
-
-    employee2 = Employee("ramesh", 30)
-    employee2.monthly_wage()
-
-    employee1.get_emp_details()
-    employee2.get_emp_details()
-
-    company1= Company("Apexon")
-    company2= Company("Teksystem")
-   
-
-    company1.add_employee(employee1)
-    company2.add_employee(employee2)
+    print("---------------------------------------------------")
+    print("|   ***  WELCOM TO EMPLOYEE WAGE COMPUTATION  ***  |")
+    print("---------------------------------------------------")
     
-    company1.display_emp_details()
-    company2.display_emp_details()
+    multi_comp = MultipleCompanies()
+    while True:
 
-    multiple_companies = MultipleCompanies()
-    multiple_companies.add_company(company1)
-    multiple_companies.add_company(company2)
-    multiple_companies.display_company()
+        print("       Menu")
+        print("      ======")
+        print("choice 1: To add company")
+        print("choice 2: To display company")
+        print("choice 3: To delete company")
+        print("choice 4: To delete employee")
+        choice = int(input("**Enter Your Choice**"))
+        
+        match choice:
+            case 0:
+                break
+        
+            case 1:
+                company_name = input("Enter company name: ")
+                company = multi_comp.get_company(company_name)
+                if not company:
+                    company = Company(company_name)
+                    emp_name = input("Enter employee name: ")
+                    employee = company.get_employee(emp_name)
+                    
+                if not employee:
+                    wage_per_hr = int(input("Enter wage: "))
+                    employee = Employee(emp_name, wage_per_hr)
+                    employee.monthly_wage()
+                    company.add_employee(employee)
+                    multi_comp.add_company(company)
+            
+            case 2:
+                multi_comp.display_company()
+
+            case 3:
+                company_name = input('Enter company name to delete: ')
+                multi_comp.delete_company(company_name)
+
+            case 4:
+                company_name = input("Enter company name: ")
+                company = multi_comp.get_company(company_name)
+                
+                if not company:
+                    print("Company not found")
+                    continue
+                emp_name = input('Enter employee name to delete: ')
+                company.delete_employee(emp_name)
 
 
 if __name__ == '__main__':
