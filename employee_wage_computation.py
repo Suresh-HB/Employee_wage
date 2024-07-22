@@ -74,6 +74,29 @@ class Company:
             emp.get_emp_details()
     
 
+class MultipleCompanies:
+
+    def __init__(self) -> None:
+        self.company_dict = {}
+
+    def get_company(self, comp_name):
+        if comp_name not in self.company_dict:
+            return None
+        return self.company_dict[comp_name]
+
+    def add_company(self, com_obj):
+        self.company_dict.update({com_obj.company_name: com_obj})
+
+    def delete_company(self, company_name):
+        self.company_dict.pop(company_name)
+
+    def display_company(self):
+        for com in self.company_dict.values():
+            print("-"*40)
+            print(f"Company: {com.company_name}")
+            com.display_emp_details()
+
+
 def main():
     
     employee1 = Employee("suresh", 20)
@@ -91,7 +114,15 @@ def main():
 
     company1.add_employee(employee1)
     company2.add_employee(employee2)
+    company1.get_employee("suresh")
     
+    company1.display_emp_details()
+    company2.display_emp_details()
+
+    multiple_companies = MultipleCompanies()
+    multiple_companies.add_company(company1)
+    multiple_companies.add_company(company2)
+    multiple_companies.display_company()
 
 
 if __name__ == '__main__':
