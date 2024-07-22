@@ -1,14 +1,17 @@
 """
 
 @Author: Suresh
-@Date: 2024-07-20
+@Date: 2024-07-22
 @Last Modified by: Suresh
-@Last Modified time: 2024-07-20
+@Last Modified time: 2024-07-22
 @Title : Employee wage computation.
 
 """
+
 import random
+
 from abc import ABC, abstractmethod
+
 
 class Employee:
 
@@ -26,9 +29,26 @@ class Employee:
     
     @staticmethod    
     def get_attendance():
+
+        """
+        Description: Function to generate attendace using random class.
+        Parameters:
+            None:
+        Returns:
+            return: function returns the employee attendence.
+        """
+
         return random.randint(0, 2)
     
     def daily_wage(self):
+
+        """
+        Description: Function to calculates employee daily wage.
+        Parameters:
+            None:
+        Returns:
+            return: returns the employee wage on work type. 
+        """
 
         emp_status = self.get_attendance()
 
@@ -41,6 +61,15 @@ class Employee:
         
     def monthly_wage(self):
 
+        """
+        Description: Function to calculates employee monthly wage based on the 
+            specified working days in a month and working hours.
+        Parameters:
+            None:
+        Returns:
+            None:  
+        """
+
         while self.total_days_worked < self.WORKING_DAYS_PER_MONTH and self.total_hrs_worked < self.MAX_WORKING_HOURS:
             wage, hours = self.daily_wage()
             self.total_wage += wage
@@ -48,6 +77,14 @@ class Employee:
             self.total_days_worked += 1
    
     def get_emp_details(self):
+
+        """
+        Description: Function for prints the employee details.
+        Parameters:
+            None:
+        Returns:
+            None:
+        """
 
         print(f"Name: {self.emp_name}")
         print(f"Total Wage: {self.total_wage}") 
@@ -59,64 +96,85 @@ class Company:
     
     def __init__(self, name) -> None:
         self.company_name = name
-        self.employee_dict = {}
+        self.employee_list = [] 
 
     def get_employee(self, emp_name):
-        return self.employee_dict.get(emp_name)
+        for emp in self.employee_list:
+            if emp.emp_name == emp_name:
+                return emp
+        return None
 
     def add_employee(self, emp_obj):
-        self.employee_dict.update({emp_obj.emp_name: emp_obj})
+        self.employee_list.append(emp_obj)
 
     def delete_employee(self, emp_name):
-        self.employee_dict.pop(emp_name)
+        for emp in self.employee_list:
+            if emp.emp_name == emp_name:
+                self.employee_list.remove(emp)
+                break
     
     def display_emp_details(self):
-        for emp in self.employee_dict.values():
+        for emp in self.employee_list:
             emp.get_emp_details()
-    
+            print()      
+
+from abc import ABC, abstractmethod
+
 
 class EmployeeWageBuilder(ABC):
 
+    """
+    Abstract base class for managing employee wage information for multiple companies.
+    This class defines methods for managing companies and their associated wage data.
+    """
+
     @abstractmethod
     def get_company(self, comp_name):
+        """Retrieve details of a company based on its company name."""
         pass
 
     @abstractmethod
     def add_company(self, com_obj):
+        """Add a new company object."""
         pass
 
     @abstractmethod
     def delete_company(self, company_name):
+        """Delete a company and its associated wage information from the company."""
         pass
     
     @abstractmethod
     def display_company(self):
+        """Display all companies currently managed in the company."""
         pass
 
 
 class MultipleCompanies(EmployeeWageBuilder):
-
+    
     def __init__(self) -> None:
-        self.company_dict = {}
+        self.company_list = []  # Using list to store companies
 
     def get_company(self, comp_name):
-        if comp_name not in self.company_dict:
-            return None
-        return self.company_dict[comp_name]
+        for company in self.company_list:
+            if company.company_name == comp_name:
+                return company
+        return None
 
     def add_company(self, com_obj):
-        self.company_dict.update({com_obj.company_name: com_obj})
+        self.company_list.append(com_obj)
 
     def delete_company(self, company_name):
-        self.company_dict.pop(company_name)
+        for company in self.company_list:
+            if company.company_name == company_name:
+                self.company_list.remove(company)
+                break
 
     def display_company(self):
-        for com in self.company_dict.values():
-            print("-"*40)
+        for com in self.company_list:
+            print("-" * 40)
             print(f"Company: {com.company_name}")
             com.display_emp_details()
-
-
+    
 def main():
     
     employee1 = Employee("suresh", 20)
