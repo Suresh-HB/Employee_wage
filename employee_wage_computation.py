@@ -1,3 +1,12 @@
+"""
+
+@Author: Suresh
+@Date: 2024-07-20
+@Last Modified by: Suresh
+@Last Modified time: 2024-07-20
+@Title : Employee wage computation.
+
+"""
 import random
 
 class Employee:
@@ -42,7 +51,7 @@ class Employee:
         print(f"Total Wage: {self.total_wage}") 
         print(f"Total Hours Worked: {self.total_hrs_worked}")
         print(f"Total Days Worked: {self.total_days_worked}")
-        print("-----------------------------------------------")
+
 
 
 def main():
