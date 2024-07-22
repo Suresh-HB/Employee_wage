@@ -38,7 +38,7 @@ class Employee:
             return self.wage_per_hr * self.FULL_DAY_HOURS, self.FULL_DAY_HOURS
         elif emp_status == 2:
             return self.wage_per_hr * self.PART_TIME_HOURS, self.PART_TIME_HOURS
-            
+           
     def monthly_wage(self):
         while self.total_days_worked < self.WORKING_DAYS_PER_MONTH and self.total_hrs_worked < self.MAX_WORKING_HOURS:
             wage, hours = self.daily_wage()
