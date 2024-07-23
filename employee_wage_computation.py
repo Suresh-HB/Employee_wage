@@ -215,6 +215,7 @@ class MultipleCompanies(EmployeeWageBuilder):
         """
 
         self.company_dict.update({com_obj.company_name: com_obj})
+        print(f"Employee added to {com_obj.company_name} Successfully")
 
     def delete_company(self, company_name):
 
@@ -239,7 +240,6 @@ class MultipleCompanies(EmployeeWageBuilder):
         """
         
         for com in self.company_dict.values():
-            # print("-" * 40)
             print(f"Company: {com.company_name}")
             com.display_emp_details()
     
@@ -258,7 +258,7 @@ def main():
         print("choice 2: To display company")
         print("choice 3: To delete company")
         print("choice 4: To delete employee")
-        choice = int(input("**Enter Your Choice**"))
+        choice = int(input("**Enter Your Choice**\n"))
         
         match choice:
             case 0:
